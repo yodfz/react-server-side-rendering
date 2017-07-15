@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const React = require('React');
 const ReactDOMServer = require('react-dom/server');
-const Index = require('./app/index');
+const Index = require('./app/index').default;
 
 const app = express();
 
@@ -14,8 +14,8 @@ app.use('/build', express.static(path.join(__dirname, 'build')));
 app.get('*', (req, res)=> {
     // 把 Hello 组件渲染成 HTML 字符串
     // console.log(Index);
-    const html = ReactDOMServer.renderToStaticMarkup(React.createElement(Index.default));
-    console.log(html);
+    // const html = ReactDOMServer.renderToStaticMarkup(React.createElement(Index.default));
+    const html = ReactDOMServer.renderToString(<Index/>);
     // 加载 index.html 的内容
     fs.readFile(__dirname + '/app/templates/index.html', 'utf8', function (err, data) {
         if (err) throw err;
